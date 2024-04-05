@@ -21,6 +21,22 @@ class AddressModel {
         }
     }
 
+    public async getById(req: Request, res: Response){
+        try {
+            const addressId = req.params.addressId
+
+            const address: address | null = await prisma.address.findUnique({
+                where: {
+                    id: addressId
+                }
+            })
+            res.status(200).json(address)
+        } catch (error) {
+            console.log("erro", error)
+            res.sendStatus(500) 
+        }
+    }
+
     public async create(req: Request, res: Response): Promise<void> {
         try {
             const newAddress: address = req.body
