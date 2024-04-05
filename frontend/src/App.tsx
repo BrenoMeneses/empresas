@@ -1,10 +1,9 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Router } from "./app/routes"
+
 
 export function App() {
   return (
-    <div>
-      <header>
-        macaco macaco
-      </header>
-    </div>
-  );
+    <Router/>
+  )
 }
