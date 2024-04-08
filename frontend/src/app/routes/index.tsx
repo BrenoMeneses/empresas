@@ -1,6 +1,5 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { LoginEmpress } from "../pages/CreateEmpress";
-import { UserPage } from "../pages/UserPage";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
+import { CreateEmpress, ListEmpress } from "../pages"
 
 export function Router() {
 
@@ -8,9 +7,9 @@ export function Router() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Navigate to="/cadastro" />} />
-                <Route path="/sobre" />
-                <Route path="/cadastro" element={<LoginEmpress />} />
-                <Route path="/usuario" element={<UserPage />} />
+                <Route path="/lista" element={<ListEmpress />} />
+                <Route path="/cadastro" element={<CreateEmpress />} />
+                <Route path="/edicao" />
             </Routes>
         </BrowserRouter>
     )

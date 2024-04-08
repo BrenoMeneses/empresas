@@ -1,12 +1,10 @@
-import { FormEmpress } from "../shared/components/FormEmpress"
 import { NavBar } from "../shared/components/NavBar"
 
-export function CreateEmpress(){
+export function ListEmpress(){
 
     return (
         <div>
             <NavBar />
-            <FormEmpress />
         </div>
     )
 }

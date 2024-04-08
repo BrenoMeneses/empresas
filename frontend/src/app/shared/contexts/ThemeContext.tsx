@@ -1,4 +1,4 @@
-import {FC, ReactNode} from "react"
+import {FC, ReactElement } from "react"
 import { createContext, useState, useCallback, useMemo, useContext } from "react"
 import { ThemeProvider } from "@mui/material"
 import { LightTheme, DarkTheme } from "../themes"
@@ -10,7 +10,7 @@ export const useAppThemeContext = () => {
     return useContext(ThemeContext)
 }
 
-export const AppThemeProvider: FC<{ children: ReactNode }> = (prop) => {
+export const AppThemeProvider: FC<{ children: ReactElement }> = (prop) => {
     const [themeName, setThemeName] = useState('light')
 
     const toggleTheme = useCallback(() => {
