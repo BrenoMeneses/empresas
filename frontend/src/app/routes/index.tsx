@@ -1,18 +1,16 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { CreateEmpress } from "../pages/CreateEmpress";
-
-import { Button } from "@mui/material";
-import { useAppThemeContext } from "../shared/contexts";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { LoginEmpress } from "../pages/CreateEmpress";
+import { UserPage } from "../pages/UserPage";
 
 export function Router() {
-    const { toggleTheme } = useAppThemeContext()
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<CreateEmpress />} />
-                <Route path="/sobre" element={<Button variant="contained" color="primary" onClick={toggleTheme}>macaco macaco</Button>} />
-                <Route path="/usuario" />
+                <Route path="/" element={<Navigate to="/cadastro" />} />
+                <Route path="/sobre" />
+                <Route path="/cadastro" element={<LoginEmpress />} />
+                <Route path="/usuario" element={<UserPage />} />
             </Routes>
         </BrowserRouter>
     )
