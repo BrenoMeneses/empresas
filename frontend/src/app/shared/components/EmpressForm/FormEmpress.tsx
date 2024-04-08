@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react"
-import { TextField } from '@mui/material'
+import { useState } from "react"
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
@@ -54,7 +53,7 @@ export function FormEmpress() {
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
 
-                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 300 }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
                             {activeStep + 1 == 1 && <UserFields></UserFields>}
                         </Box>
 
