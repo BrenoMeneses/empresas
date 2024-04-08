@@ -40,13 +40,12 @@ export function FormEmpress() {
             {activeStep === steps.length ? (
                 <React.Fragment>
                     <Typography sx={{ mt: 2, mb: 1 }}>
-                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 300 }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
                             All steps completed - you're finished
                         </Box>
                     </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Reset</Button>
+                    <Box sx={{ display: 'flex', justifyContent: "center", pt: 2 }}>
+                        <Button color="primary" sx={{width: "30%"}} onClick={handleReset}>Reset</Button>
                     </Box>
                 </React.Fragment>
             ) : (

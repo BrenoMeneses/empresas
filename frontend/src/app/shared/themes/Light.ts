@@ -5,7 +5,7 @@ export const LightTheme = createTheme({
     palette: {
         primary: {
             main: cyan[600],
-            dark: cyan[800],
+            dark: cyan[900],
             light: cyan[500],
             contrastText: "#fff"
         },
