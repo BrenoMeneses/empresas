@@ -1,24 +1,23 @@
-import { useState } from "react"
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { UserFields } from "./UserFields"
+import { useState, Fragment, useRef } from "react"
+import { Box, Stepper, Step, StepLabel, Button, Typography } from '@mui/material'
+import { UserFields, CorporateFields, AddressFields } from "./UserFields"
+import { useForm } from "react-hook-form"
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad']
+const steps = ['Informações do usuário', 'informações da empresa', 'endereço']
 
 export function FormEmpress() {
+    const { handleSubmit } = useForm()
+    const userForm = useForm()
     const [activeStep, setActiveStep] = useState(0)
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    const HandleNext = (e: any) => {
+        e.preventDefault()
+        console.log(userForm.getValues())
+        setActiveStep((activeStep) => activeStep + 1)
     }
 
     const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        setActiveStep((activeStep) => activeStep - 1)
     }
 
     const handleReset = () => {
@@ -38,39 +37,41 @@ export function FormEmpress() {
                 })}
             </Stepper>
             {activeStep === steps.length ? (
-                <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
+                <Fragment>
+                    <Typography component="div" sx={{ mt: 2, mb: 1 }}>
                         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
                             All steps completed - you're finished
                         </Box>
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: "center", pt: 2 }}>
-                        <Button color="primary" sx={{width: "30%"}} onClick={handleReset}>Reset</Button>
+                        <Button color="primary" sx={{ width: "30%" }} onClick={handleReset}>Reset</Button>
                     </Box>
-                </React.Fragment>
+                </Fragment>
             ) : (
-                <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
+                <Fragment>
+                    <Typography component="div" sx={{ mt: 2, mb: 1 }}>
 
-                        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
-                            {activeStep + 1 == 1 && <UserFields></UserFields>}
+                        <Box component="form" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
+                            {activeStep + 1 === 1 && <UserFields />}
+                            {activeStep + 1 === 2 && <CorporateFields />}
+                            {activeStep + 1 === 3 && <AddressFields />}
+
+                            <Box sx={{width: "100%", display: 'flex', flexDirection: 'row', pt: 2 }}>
+                                <Button
+                                    color="inherit"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    sx={{ mr: 1 }} >
+                                    Back
+                                </Button>
+                                <Box sx={{ flex: '1 1 auto' }} />
+                                <Button type="submit" color="primary" variant="outlined" onClick={HandleNext}>
+                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                </Button>
+                            </Box>
                         </Box>
-
                     </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Button
-                            color="inherit"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{ mr: 1 }} >
-                            Back
-                        </Button>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                        </Button>
-                    </Box>
-                </React.Fragment>
+                </Fragment>
             )}
         </Box>
     )
