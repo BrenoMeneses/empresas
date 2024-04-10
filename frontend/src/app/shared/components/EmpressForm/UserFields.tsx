@@ -2,6 +2,7 @@ import { TextField, Box, Button } from '@mui/material'
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import { Password } from '@mui/icons-material'
 
 interface UserFieldsValue {
     name: string
@@ -18,9 +19,9 @@ interface propUserFields {
 
 const schema = yup.object({
     name: yup.string().required("campo obrigatório"),
-    email: yup.string().required("campo obrigatório"),
+    email: yup.string().required("campo obrigatório").email("emil inválido"),
     password: yup.string().required("campo obrigatório"),
-    passConf: yup.string().required("campo obrigatório").oneOf([yup.ref('senha')], 'Senhas não coincidem')
+    passConf: yup.string().required("campo obrigatório").oneOf([yup.ref('password')], 'senhas diferentes')
 })
 
 const steps = ['Informações do usuário', 'informações da empresa', 'endereço']
