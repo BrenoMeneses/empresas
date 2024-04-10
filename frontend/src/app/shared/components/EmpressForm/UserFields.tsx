@@ -1,84 +1,91 @@
-import { TextField, Box } from '@mui/material'
-import { useState } from "react"
+import { TextField, Box, Button } from '@mui/material'
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
 interface UserFieldsValue {
     name: string
     email: string
     password: string
+    passConf: string
 }
 
 interface propUserFields {
-    updateStep: (value: boolean) => void
-    updateUser: (value: UserFieldsValue) => void
+    HandleNext: () => void
+    HandleBack: () => void
+    activeStep: number
 }
 
-export function UserFields({updateUser, updateStep}: propUserFields) {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [passConf, setPassConf] = useState("")
-    const [error, setError] = useState("")
-    const OnBlur = () => {
-        const user = {
-            name: name,
-            email: email,
-            password: password
-        }
-        if(!user.name || !user.email || !user.password){
-            setError("algum campo não foi preenchido")
-            updateStep(false)
-            return 
-        }
-        if(passConf !== user.password) {
-            setError("senhas diferentes")
-            updateStep(false)
-            return
-        }
-        setError("")
-        updateStep(true)
-        updateUser(user)
+const schema = yup.object({
+    name: yup.string().required("campo obrigatório"),
+    email: yup.string().required("campo obrigatório"),
+    password: yup.string().required("campo obrigatório"),
+    passConf: yup.string().required("campo obrigatório").oneOf([yup.ref('senha')], 'Senhas não coincidem')
+})
+
+const steps = ['Informações do usuário', 'informações da empresa', 'endereço']
+export function UserFields({ activeStep, HandleNext, HandleBack }: propUserFields) {
+    const { register, handleSubmit, formState: { errors } } = useForm<UserFieldsValue>({ resolver: yupResolver(schema) })
+
+    const onSubmit = (data: any) => {
+        console.log(data)
+        HandleNext()
     }
+
     return (
-        <>
+        <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <TextField
+                error={errors.name?.message ? true : false}
+                helperText={errors.name?.message}
                 variant='outlined'
                 label='Nome'
                 type='text'
-                name='name'
-                onBlur={OnBlur}
-                onChange={e => setName(e.target.value)}
                 sx={{ marginY: 2, width: 416 }}
+                {...register("name")}
             />
             <TextField
+                error={errors.email?.message ? true : false}
+                helperText={errors.email?.message}
                 variant='outlined'
                 label='Email'
                 type='email'
-                onBlur={OnBlur}
-                onChange={e => setEmail(e.target.value)}
                 sx={{ marginY: 2, width: 416 }}
+                {...register("email")}
             />
             <Box width="100%" sx={{ display: "flex", justifyContent: "center" }}>
                 <TextField
+                    error={errors.password?.message ? true : false}
+                    helperText={errors.password?.message}
                     variant='outlined'
                     label='Senha'
                     type='password'
-                    name='password'
-                    onBlur={OnBlur}
-                    onChange={e => setPassword(e.target.value)}
+                    {...register("password")}
                     sx={{ marginX: 1, marginY: 2, width: 200 }}
                 />
                 <TextField
+                    error={errors.passConf?.message ? true : false}
+                    helperText={errors.passConf?.message}
                     variant='outlined'
                     label='Confirme a senha'
                     type='password'
-                    name='passConf'
-                    onBlur={OnBlur}
-                    onChange={e => setPassConf(e.target.value)}
+                    {...register("passConf")}
                     sx={{ marginX: 1, marginY: 2, width: 200 }}
                 />
             </Box>
-            {error && <Box color="red">{error}</Box>}
-        </>
+            <Box sx={{ width: "100%", display: 'flex', flexDirection: 'row', pt: 2 }}>
+                <Button
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={HandleBack}
+                    sx={{ mr: 1 }} >
+                    Back
+                </Button>
+                <Box sx={{ flex: '1 1 auto' }} />
+                <Button type="submit" color="primary" variant="outlined">
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+            </Box>
+        </Box>
     )
 }
 

@@ -12,31 +12,9 @@ interface UserFieldsValue {
 
 export function FormEmpress() {
     const [activeStep, setActiveStep] = useState(0)
-    const [ifStep, setIfStep] = useState(false)
-    const [userFieldsValue, setUserFieldsValue] = useState({})
-    const [addressFieldsValue, setAddressFieldsValue] = useState({})
-    const [corporateFieldsValue, setCorporateFieldsValue] = useState({})
 
-    const updateIfStep = (value: boolean) => {
-        setIfStep(value)
-    }
-    const updateUserFields = (value: UserFieldsValue) => {
-        setUserFieldsValue(value)
-    }
-
-    const HandleNext = (e: SyntheticEvent) => {
-        e.preventDefault()
-
-        const newUser = {
-            ...userFieldsValue,
-            ...addressFieldsValue,
-            ...corporateFieldsValue
-        }
-        console.log(newUser)
-        if(ifStep) {
-            setActiveStep((activeStep) => activeStep + 1)
-        }
-        setIfStep(false)
+    const HandleNext = () => {
+        setActiveStep((activeStep) => activeStep + 1)
     }
 
     const handleBack = () => {
@@ -74,25 +52,13 @@ export function FormEmpress() {
                 <Fragment>
                     <Typography component="div" sx={{ mt: 2, mb: 1 }}>
 
-                        <Box component="form" sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }}>
-                            {activeStep + 1 === 1 && <UserFields  updateUser={updateUserFields} updateStep={updateIfStep} />}
+                            {activeStep + 1 === 1 && <UserFields
+                                activeStep={activeStep}
+                                HandleNext={HandleNext}
+                                HandleBack={handleBack} />}
                             {activeStep + 1 === 2 && <CorporateFields />}
                             {activeStep + 1 === 3 && <AddressFields />}
 
-                            <Box sx={{ width: "100%", display: 'flex', flexDirection: 'row', pt: 2 }}>
-                                <Button
-                                    color="inherit"
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    sx={{ mr: 1 }} >
-                                    Back
-                                </Button>
-                                <Box sx={{ flex: '1 1 auto' }} />
-                                <Button type="submit" color="primary" variant="outlined" onClick={HandleNext}>
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                </Button>
-                            </Box>
-                        </Box>
                     </Typography>
                 </Fragment>
             )}
