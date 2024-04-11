@@ -15,7 +15,11 @@ const steps = ["Informações do usuário", "informações da empresa", "endere�
 export function FormEmpress() {
   const [activeStep, setActiveStep] = useState(0);
 
-  const HandleNext = () => {
+  const HandleNext = (data: any) => {
+    const newUser = {
+        ...data
+    }
+    console.log(newUser)
     setActiveStep((activeStep) => activeStep + 1);
   };
 
@@ -30,7 +34,7 @@ export function FormEmpress() {
   return (
     <Box sx={{ width: "50%", margin: "auto", padding: 1 }}>
       <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {steps.map((label) => {
           const stepProps: { completed?: boolean } = {};
           return (
             <Step key={label} {...stepProps}>

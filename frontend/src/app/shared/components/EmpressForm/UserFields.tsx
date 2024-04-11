@@ -11,7 +11,7 @@ interface UserFieldsValue {
 }
 
 interface propUserFields {
-    HandleNext: () => void
+    HandleNext: (data: any) => void
     HandleBack: () => void
     activeStep: number
 }
@@ -28,8 +28,7 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
     const { register, handleSubmit, formState: { errors } } = useForm<UserFieldsValue>({ resolver: yupResolver(userFieldSchema) })
 
     const onSubmit = (data: any) => {
-        console.log(data)
-        HandleNext()
+        HandleNext(data)
     }
 
     return (
