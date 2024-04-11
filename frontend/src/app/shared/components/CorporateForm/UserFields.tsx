@@ -3,17 +3,18 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
+interface propUserFields {
+    HandleNext: (data: any) => void
+    HandleBack: () => void
+    activeStep: number
+    value: any
+}
+
 interface UserFieldsValue {
     name: string
     email: string
     password: string
     passConf: string
-}
-
-interface propUserFields {
-    HandleNext: (data: any) => void
-    HandleBack: () => void
-    activeStep: number
 }
 
 const userFieldSchema = yup.object({
@@ -24,10 +25,9 @@ const userFieldSchema = yup.object({
 })
 
 const steps = ['Informações do usuário', 'informações da empresa', 'endereço']
-export function UserFields({ activeStep, HandleNext, HandleBack }: propUserFields) {
+export function UserFields({ activeStep, HandleNext, HandleBack, value }: propUserFields) {
     const { register, handleSubmit, formState: { errors } } = useForm<UserFieldsValue>({ resolver: yupResolver(userFieldSchema) })
-
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: UserFieldsValue) => {
         HandleNext(data)
     }
 
@@ -39,6 +39,7 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
                 variant='outlined'
                 label='Nome'
                 type='text'
+                defaultValue={ value.name || ""}
                 sx={{ marginY: 2, width: 416 }}
                 {...register("name")}
             />
@@ -48,6 +49,7 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
                 variant='outlined'
                 label='Email'
                 type='email'
+                defaultValue={ value.email || ""}
                 sx={{ marginY: 2, width: 416 }}
                 {...register("email")}
             />
@@ -58,6 +60,7 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
                     variant='outlined'
                     label='Senha'
                     type='password'
+                    defaultValue={ value.password || ""}
                     {...register("password")}
                     sx={{ marginX: 1, marginY: 2, width: 200 }}
                 />
@@ -67,6 +70,7 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
                     variant='outlined'
                     label='Confirme a senha'
                     type='password'
+                    defaultValue={ value.passConf || ""}
                     {...register("passConf")}
                     sx={{ marginX: 1, marginY: 2, width: 200 }}
                 />
@@ -85,34 +89,6 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
                 </Button>
             </Box>
         </Box>
-    )
-}
-
-export function AddressFields() {
-
-    return (
-        <>
-            <TextField
-                variant='outlined'
-                label='CEP'
-                type='text'
-                name='CEP'
-                sx={{ marginY: 2, width: 416 }}
-            />
-            <TextField
-                variant='outlined'
-                label='Nome da rua'
-                type='text'
-                name='cnpj'
-                sx={{ marginY: 2, width: 416 }}
-            />
-            <TextField
-                variant='outlined'
-                label='Número'
-                type='number'
-                sx={{ marginY: 2, width: 416 }}
-            />
-        </>
     )
 }
 // git config --global user.email "brenomenesesdiaz@gmail.com.br"

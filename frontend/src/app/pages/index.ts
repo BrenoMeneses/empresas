@@ -1,2 +1,2 @@
-export * from "./CreateEmpress"
-export * from "./ListEmpress"
+export * from "./CreateCorporate"
+export * from "./ListCorporates"

@@ -1,2 +1,2 @@
-export * from "./EmpressForm/FormEmpress"
+export * from "./CorporateForm/CorporateForm"
 export * from "./NavBar"

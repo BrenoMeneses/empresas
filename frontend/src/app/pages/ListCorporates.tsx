@@ -1,6 +1,6 @@
 import { NavBar } from "../shared/components/NavBar"
 
-export function ListEmpress(){
+export function ListCorporates(){
 
     return (
         <div>
