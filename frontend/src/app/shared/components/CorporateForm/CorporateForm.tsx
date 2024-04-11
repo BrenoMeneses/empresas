@@ -12,7 +12,6 @@ export function FormCorporate() {
 
   const HandleNext = (data: any) => {
     newUser = { ...newUser, ...data }
-    console.log(newUser)
     setActiveStep((activeStep) => activeStep + 1)
   }
 
@@ -26,8 +25,8 @@ export function FormCorporate() {
   }
 
   return (
-    <Box sx={{ width: "50%", margin: "auto", padding: 1 }}>
-      <Stepper activeStep={activeStep}>
+    <Box sx={{ width: {xs: "100%", sm: "50%"}, margin: "auto", padding: 1, boxSizing: {xs: "border-box"} }}>
+      <Stepper sx={{width: "100%"}} activeStep={activeStep}>
         {steps.map((label) => {
           return (
             <Step key={label} >
@@ -41,13 +40,16 @@ export function FormCorporate() {
           <Typography component="div" sx={{ mt: 2, mb: 1 }}>
 
             <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: 400 }} >
-              All steps completed - you're finished
+              Cadastro finalizado
             </Box>
 
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center", pt: 2 }}>
             <Button color="primary" sx={{ width: "30%" }} onClick={handleReset}>
               Reset
+            </Button>
+            <Button color="primary" sx={{ width: "30%" }} onClick={handleReset}>
+              Ver lista
             </Button>
           </Box>
         </Fragment>

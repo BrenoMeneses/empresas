@@ -21,12 +21,12 @@ const AddressFieldSchema = yup.object({
   number: yup.string().required("campo obigatório")
 })
 
-const steps = ["Informações do usuário", "informações da empresa", "endereço"];
 export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFields) {
   const { register, handleSubmit, formState: { errors } } = useForm<AddressFieldsValue>({ resolver: yupResolver(AddressFieldSchema) })
 
   const onSubmit = (data: AddressFieldsValue) => {
     HandleNext(data)
+    console.log(data)
   }
   return (
     <Box
@@ -40,7 +40,7 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
         variant="outlined"
         label="CEP"
         type="text"
-        sx={{ marginY: 2, width: 416 }}
+        sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
         {...register("zipCode")}
       />
       <TextField
@@ -49,7 +49,7 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
         variant="outlined"
         label="Nome da rua"
         type="text"
-        sx={{ marginY: 2, width: 416 }}
+        sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
         {...register("street")}
       />
         <TextField
@@ -59,20 +59,20 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
           label="Número"
           type="number"
           {...register("number")}
-          sx={{ marginX: 1, marginY: 2, width: 416 }}
+          sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
         />
-      <Box sx={{ width: "100%", display: "flex", flexDirection: "row", pt: 2 }}>
+      <Box sx={{ width: "90%", display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
           color="inherit"
           disabled={activeStep === 0}
           onClick={HandleBack}
           sx={{ mr: 1 }}
         >
-          Back
+          Voltar
         </Button>
         <Box sx={{ flex: "1 1 auto" }} />
         <Button type="submit" color="primary" variant="outlined">
-          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+          Finalizar
         </Button>
       </Box>
     </Box>
