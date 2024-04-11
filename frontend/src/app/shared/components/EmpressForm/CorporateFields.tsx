@@ -3,6 +3,52 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
+interface CorporateFields {
+    corporateName: string
+    cnpj: string
+    phone: string
+}
+
+interface propUserFields {
+    HandleNext: () => void
+    HandleBack: () => void
+    activeStep: number
+}
+
+const corporateFieldSchema = yup.object({
+    corporateName: yup.string().required("campo obrigatório"),
+    cnpj: yup.string().required("campo obrigatório"),
+    phone: yup.string().required("campo obigatório")
+})
+
+export function CorporateFields() {
+
+    return (
+        <>
+            <TextField
+                variant='outlined'
+                label='Nome da empresa'
+                type='text'
+                name='corporateName'
+                sx={{ marginY: 2, width: 416 }}
+            />
+            <TextField
+                variant='outlined'
+                label='Cnpj da empresa'
+                type='text'
+                name='cnpj'
+                sx={{ marginY: 2, width: 416 }}
+            />
+            <TextField
+                variant='outlined'
+                label='Telefone pra contato'
+                type='text'
+                sx={{ marginY: 2, width: 416 }}
+            />
+        </>
+    )
+}
+
 interface UserFieldsValue {
     name: string
     email: string
@@ -88,33 +134,3 @@ export function UserFields({ activeStep, HandleNext, HandleBack }: propUserField
         </Box>
     )
 }
-
-export function AddressFields() {
-
-    return (
-        <>
-            <TextField
-                variant='outlined'
-                label='CEP'
-                type='text'
-                name='CEP'
-                sx={{ marginY: 2, width: 416 }}
-            />
-            <TextField
-                variant='outlined'
-                label='Nome da rua'
-                type='text'
-                name='cnpj'
-                sx={{ marginY: 2, width: 416 }}
-            />
-            <TextField
-                variant='outlined'
-                label='Número'
-                type='number'
-                sx={{ marginY: 2, width: 416 }}
-            />
-        </>
-    )
-}
-// git config --global user.email "brenomenesesdiaz@gmail.com.br"
-// git config --global user.name "breno"

@@ -1,14 +1,9 @@
 import { useState, Fragment, SyntheticEvent } from "react"
 import { Box, Stepper, Step, StepLabel, Button, Typography } from '@mui/material'
-import { UserFields, CorporateFields, AddressFields } from "./UserFields"
+import { UserFields, AddressFields } from "./UserFields"
+import {CorporateFields} from "./CorporateFields"
 
 const steps = ['Informações do usuário', 'informações da empresa', 'endereço']
-
-interface UserFieldsValue {
-    name: string
-    email: string
-    password: string
-}
 
 export function FormEmpress() {
     const [activeStep, setActiveStep] = useState(0)
