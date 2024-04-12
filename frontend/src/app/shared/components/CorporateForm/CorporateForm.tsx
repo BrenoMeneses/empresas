@@ -15,7 +15,18 @@ export function FormCorporate() {
     setActiveStep((activeStep) => activeStep + 1)
   }
 
-  const handleBack = () => {
+  const HandleCad = () => {
+    console.log(newUser)
+    fetch("http://localhost:8080/client/address", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    })
+  }
+
+  const HandleBack = () => {
     setActiveStep((activeStep) => activeStep - 1)
   }
 
@@ -25,8 +36,8 @@ export function FormCorporate() {
   }
 
   return (
-    <Box sx={{ width: {xs: "100%", sm: "50%"}, margin: "auto", padding: 1, boxSizing: {xs: "border-box"} }}>
-      <Stepper sx={{width: "100%"}} activeStep={activeStep}>
+    <Box sx={{ width: { xs: "100%", sm: "50%" }, margin: "auto", padding: 1, boxSizing: { xs: "border-box" } }}>
+      <Stepper sx={{ width: "100%" }} activeStep={activeStep}>
         {steps.map((label) => {
           return (
             <Step key={label} >
@@ -61,21 +72,24 @@ export function FormCorporate() {
                 value={newUser}
                 activeStep={activeStep}
                 HandleNext={HandleNext}
-                HandleBack={handleBack}
+                HandleBack={HandleBack}
               />
             )}
             {activeStep + 1 === 2 && (
               <CorporateFields
+                value={newUser}
                 activeStep={activeStep}
                 HandleNext={HandleNext}
-                HandleBack={handleBack}
+                HandleBack={HandleBack}
               />
             )}
             {activeStep + 1 === 3 && (
               <AddressFields
+                value={newUser}
                 activeStep={activeStep}
                 HandleNext={HandleNext}
-                HandleBack={handleBack}
+                HandleBack={HandleBack}
+                HandleCad={HandleCad}
               />
             )}
           </Typography>

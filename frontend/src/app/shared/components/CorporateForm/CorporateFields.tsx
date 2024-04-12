@@ -10,6 +10,7 @@ interface propUserFields {
   HandleNext: (data: any) => void
   HandleBack: () => void
   activeStep: number
+  value: any
 }
 
 interface CorporateFieldsValue {
@@ -24,12 +25,12 @@ const corporateFieldSchema = yup.object({
   phone: yup.string().required("campo obigatório")
 })
 
-export function CorporateFields({ activeStep, HandleNext, HandleBack }: propUserFields) {
+export function CorporateFields({ activeStep, HandleNext, HandleBack, value }: propUserFields) {
   const { register, handleSubmit, formState: { errors } } = useForm<CorporateFieldsValue>({ resolver: yupResolver(corporateFieldSchema) })
 
   const onSubmit = (data: CorporateFieldsValue) => {
     HandleNext(data)
-  };
+  }
   return (
     <Box component={"form"} onSubmit={handleSubmit(onSubmit)} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} >
       <TextField
@@ -38,6 +39,7 @@ export function CorporateFields({ activeStep, HandleNext, HandleBack }: propUser
         variant="outlined"
         label="Nome da empresa"
         type="text"
+        defaultValue={ value.corporateName || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
         {...register("corporateName")}
       />
@@ -48,6 +50,7 @@ export function CorporateFields({ activeStep, HandleNext, HandleBack }: propUser
         variant="outlined"
         label="cnpj"
         type="text"
+        defaultValue={ value.cnpj || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
         {...register("cnpj")}
       />
@@ -58,8 +61,9 @@ export function CorporateFields({ activeStep, HandleNext, HandleBack }: propUser
         variant="outlined"
         label="phone"
         type="text"
-        {...register("phone")}
+        defaultValue={ value.phone || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
+        {...register("phone")}
       />
       <Box sx={{ width: "90%", display: "flex", flexDirection: "row", pt: 2 }}>
         <Button

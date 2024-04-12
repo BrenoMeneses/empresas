@@ -69,6 +69,29 @@ class ClientModel {
             res.sendStatus(500)
         }
     }
+
+    public async createwithAddress(req: Request, res: Response) {
+        const newData = req.body
+
+        const client: client = await prisma.client.create({
+            data: {
+                name: newData.name,
+                password: newData.password,
+                corporateName: newData.corporateName,
+                cnpj: newData.cnpj,
+                phone: newData.phone,
+                email: newData.email,
+                address: {
+                    create: {
+                        zipCode: newData.zipCode,
+                        street: newData.street,
+                        number: Number(newData.number)
+                    }
+                }
+            }
+        })
+        res.status(200).json(client)
+    }
 }
 
 export const clienteModel = new ClientModel()

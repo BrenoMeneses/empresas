@@ -38,7 +38,6 @@ export function UserFields({ activeStep, HandleNext, HandleBack, value }: propUs
                 variant='outlined'
                 label='Nome'
                 type='text'
-                
                 defaultValue={ value.name || ""}
                 sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
                 {...register("name")}

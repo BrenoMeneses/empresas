@@ -6,7 +6,9 @@ import * as yup from "yup";
 interface propUserFields {
   HandleNext: (data: any) => void
   HandleBack: () => void
+  HandleCad: () => void
   activeStep: number
+  value: any
 }
 
 interface AddressFieldsValue {
@@ -21,12 +23,12 @@ const AddressFieldSchema = yup.object({
   number: yup.string().required("campo obigatório")
 })
 
-export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFields) {
+export function AddressFields({ activeStep, HandleNext, HandleBack, HandleCad, value}: propUserFields) {
   const { register, handleSubmit, formState: { errors } } = useForm<AddressFieldsValue>({ resolver: yupResolver(AddressFieldSchema) })
 
   const onSubmit = (data: AddressFieldsValue) => {
     HandleNext(data)
-    console.log(data)
+    HandleCad()
   }
   return (
     <Box
@@ -40,6 +42,7 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
         variant="outlined"
         label="CEP"
         type="text"
+        defaultValue={ value.zipCode || ""}
         sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
         {...register("zipCode")}
       />
@@ -49,6 +52,7 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
         variant="outlined"
         label="Nome da rua"
         type="text"
+        defaultValue={ value.street || ""}
         sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
         {...register("street")}
       />
@@ -58,8 +62,9 @@ export function AddressFields({ activeStep, HandleNext, HandleBack}: propUserFie
           variant="outlined"
           label="Número"
           type="number"
-          {...register("number")}
+          defaultValue={ value.number || ""}
           sx={{ marginY: 2, width: {xs: "90%", md: "70%"} }}
+          {...register("number")}
         />
       <Box sx={{ width: "90%", display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
