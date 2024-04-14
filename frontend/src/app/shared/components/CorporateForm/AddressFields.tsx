@@ -6,7 +6,7 @@ import * as yup from "yup";
 interface propUserFields {
   HandleNext: (data: any) => void
   HandleBack: () => void
-  HandleCad: () => void
+  HandleRegister: () => void
   activeStep: number
   value: any
 }
@@ -23,12 +23,12 @@ const AddressFieldSchema = yup.object({
   number: yup.string().required("campo obigatório")
 })
 
-export function AddressFields({ activeStep, HandleNext, HandleBack, HandleCad, value}: propUserFields) {
+export function AddressFields({ activeStep, HandleNext, HandleBack, HandleRegister, value}: propUserFields) {
   const { register, handleSubmit, formState: { errors } } = useForm<AddressFieldsValue>({ resolver: yupResolver(AddressFieldSchema) })
 
   const onSubmit = (data: AddressFieldsValue) => {
     HandleNext(data)
-    HandleCad()
+    HandleRegister()
   }
   return (
     <Box

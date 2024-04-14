@@ -88,6 +88,9 @@ class ClientModel {
                         number: Number(newData.number)
                     }
                 }
+            },
+            include: {
+                address: true
             }
         })
         res.status(200).json(client)

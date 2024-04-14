@@ -15,15 +15,14 @@ export function FormCorporate() {
     setActiveStep((activeStep) => activeStep + 1)
   }
 
-  const HandleCad = () => {
-    console.log(newUser)
+  const HandleRegister = () => {
     fetch("http://localhost:8080/client/address", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(newUser)
-    })
+    }).catch((error) => { console.log(error) })
   }
 
   const HandleBack = () => {
@@ -89,7 +88,7 @@ export function FormCorporate() {
                 activeStep={activeStep}
                 HandleNext={HandleNext}
                 HandleBack={HandleBack}
-                HandleCad={HandleCad}
+                HandleRegister={HandleRegister}
               />
             )}
           </Typography>

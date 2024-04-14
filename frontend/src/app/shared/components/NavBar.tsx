@@ -12,7 +12,7 @@ export function NavBar() {
             <Button href='/lista' color="inherit">Lista</Button>
           </Box>
           <Box textAlign="center" sx={{ flexGrow: 1 }}>
-            <Button href='/cadastro' color='inherit' >Login</Button>
+            <Button href='/cadastro' color='inherit' >Cadastrar</Button>
           </Box>
         </Toolbar>
       </AppBar>

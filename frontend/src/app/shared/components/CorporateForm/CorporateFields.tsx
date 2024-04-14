@@ -1,10 +1,10 @@
 import { TextField, Box, Button } from "@mui/material"
 import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
 import { IMaskInput } from 'react-imask'
+import { yupResolver } from "@hookform/resolvers/yup"
+import { cnpj } from 'cpf-cnpj-validator'
 import * as yup from "yup"
-import React from "react"
-import { text } from "stream/consumers"
+import React from "react";
 
 interface propUserFields {
   HandleNext: (data: any) => void
@@ -21,8 +21,8 @@ interface CorporateFieldsValue {
 
 const corporateFieldSchema = yup.object({
   corporateName: yup.string().required("campo obrigatório"),
-  cnpj: yup.string().required("campo obrigatório"),
-  phone: yup.string().required("campo obigatório")
+  cnpj: yup.string().required("campo obrigatório").test('cnpjValido', 'CNPJ inválido', (value) => { return cnpj.isValid(value) }),
+  phone: yup.string().required("campo obigatório").length(15, "telefone precisa ter 14 caracteres")
 })
 
 export function CorporateFields({ activeStep, HandleNext, HandleBack, value }: propUserFields) {
@@ -39,29 +39,30 @@ export function CorporateFields({ activeStep, HandleNext, HandleBack, value }: p
         variant="outlined"
         label="Nome da empresa"
         type="text"
-        defaultValue={ value.corporateName || ""}
+        defaultValue={value.corporateName || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
         {...register("corporateName")}
       />
       <TextField
-
+        inputProps={{}}
         error={errors.cnpj?.message ? true : false}
         helperText={errors.cnpj?.message}
+        InputProps={{ inputComponent: MaskCnpjInput as any }}
         variant="outlined"
         label="cnpj"
         type="text"
-        defaultValue={ value.cnpj || ""}
+        defaultValue={value.cnpj || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
         {...register("cnpj")}
       />
       <TextField
         error={errors.phone?.message ? true : false}
         helperText={errors.phone?.message}
-        inputProps={{}}
+        InputProps={{ inputComponent: MaskPhoneInput as any }}
         variant="outlined"
-        label="phone"
+        label="telefone"
         type="text"
-        defaultValue={ value.phone || ""}
+        defaultValue={value.phone || ""}
         sx={{ marginY: 2, width: { xs: "90%", md: "70%" } }}
         {...register("phone")}
       />
@@ -82,3 +83,17 @@ export function CorporateFields({ activeStep, HandleNext, HandleBack, value }: p
     </Box>
   )
 }
+
+const MaskCnpjInput = React.forwardRef<HTMLInputElement>((props, ref) => {
+  const { ...other } = props
+  return (
+    <IMaskInput mask="00.000.000/0000-00" {...other} inputRef={ref} />
+  )
+})
+
+const MaskPhoneInput = React.forwardRef<HTMLInputElement>((props, ref) => {
+  const { ...other } = props
+  return (
+    <IMaskInput mask="(00) 00000-0000" {...other} inputRef={ref} />
+  )
+})
