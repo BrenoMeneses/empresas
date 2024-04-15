@@ -16,13 +16,13 @@ export function FormCorporate() {
   }
 
   const HandleRegister = () => {
-    fetch("http://localhost:8080/client/address", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(newUser)
-    }).catch((error) => { console.log(error) })
+    // fetch("http://localhost:8080/client/address", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(newUser)
+    // }).catch((error) => { console.log(error) })
   }
 
   const HandleBack = () => {
@@ -58,7 +58,7 @@ export function FormCorporate() {
             <Button color="primary" sx={{ width: "30%" }} onClick={handleReset}>
               Reset
             </Button>
-            <Button color="primary" sx={{ width: "30%" }} onClick={handleReset}>
+            <Button color="primary" sx={{ width: "30%" }} href="/lista">
               Ver lista
             </Button>
           </Box>
