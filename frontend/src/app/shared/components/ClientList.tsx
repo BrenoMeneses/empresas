@@ -107,7 +107,7 @@ export const ClientList = () => {
                         {clients.map(client => (
                             <TableRow key={client.id}>
                                 <TableCell sx={{ textAlign: "end" }}>
-                                    <Button variant="contained" color="info">editar <EditIcon/></Button>
+                                    <Button variant="contained" color="info" href={"/edicao/"+client.id}> editar <EditIcon/></Button>
                                 </TableCell>
                                 <TableCell key={client.name}>{client.name}</TableCell>
                                 <TableCell key={client.corporateName}>{client.corporateName}</TableCell>

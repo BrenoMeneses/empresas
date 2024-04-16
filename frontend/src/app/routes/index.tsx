@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"
-import { CreateCorporates, ListCorporates } from "../pages"
+import { CreateCorporates, ListCorporates, EditCorporate } from "../pages"
 
 export function Router() {
 
@@ -9,7 +9,7 @@ export function Router() {
                 <Route path="/" element={<Navigate to="/cadastro" />} />
                 <Route path="/lista" element={<ListCorporates />} />
                 <Route path="/cadastro" element={<CreateCorporates />} />
-                <Route path="/edicao" />
+                <Route path="/edicao/:id" element={<EditCorporate />}/>
             </Routes>
         </BrowserRouter>
     )

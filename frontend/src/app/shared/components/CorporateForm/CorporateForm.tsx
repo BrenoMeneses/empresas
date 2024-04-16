@@ -16,13 +16,13 @@ export function FormCorporate() {
   }
 
   const HandleRegister = () => {
-    // fetch("http://localhost:8080/client/address", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(newUser)
-    // }).catch((error) => { console.log(error) })
+    fetch("http://localhost:8080/client/address", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    }).catch((error) => { console.log(error) })
   }
 
   const HandleBack = () => {
