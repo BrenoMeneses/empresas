@@ -15,7 +15,7 @@ interface client {
 }
 
 class ClientModel {
-    public async getAll(req: Request, res: Response){
+    public async getAll(req: Request, res: Response) {
         try {
             const clients: client[] = await prisma.client.findMany({
                 include: {
@@ -29,7 +29,7 @@ class ClientModel {
         }
     }
 
-    public async getById(req: Request, res: Response){
+    public async getById(req: Request, res: Response) {
         try {
             const clientId = req.params.clientId
 
@@ -48,7 +48,7 @@ class ClientModel {
         }
     }
 
-    public async create(req: Request, res: Response){
+    public async create(req: Request, res: Response) {
         try {
             const newCliente: client = req.body
 
@@ -71,29 +71,68 @@ class ClientModel {
     }
 
     public async createwithAddress(req: Request, res: Response) {
-        const newData = req.body
+        try {
+            const newData = req.body
 
-        const client: client = await prisma.client.create({
-            data: {
-                name: newData.name,
-                password: newData.password,
-                corporateName: newData.corporateName,
-                cnpj: newData.cnpj,
-                phone: newData.phone,
-                email: newData.email,
-                address: {
-                    create: {
-                        zipCode: newData.zipCode,
-                        street: newData.street,
-                        number: Number(newData.number)
+            const client: client = await prisma.client.create({
+                data: {
+                    name: newData.name,
+                    password: newData.password,
+                    corporateName: newData.corporateName,
+                    cnpj: newData.cnpj,
+                    phone: newData.phone,
+                    email: newData.email,
+                    address: {
+                        create: {
+                            zipCode: newData.zipCode,
+                            street: newData.street,
+                            number: Number(newData.number)
+                        }
                     }
+                },
+                include: {
+                    address: true
                 }
-            },
-            include: {
-                address: true
-            }
-        })
-        res.status(200).json(client)
+            })
+            res.status(200).json(client)
+        } catch (error) {
+            console.log("erro", error)
+            res.sendStatus(500)
+        }
+    }
+
+    public async updateWithAddress(req: Request, res: Response) {
+        try {
+            const clientId = req.params.id
+            const newData = req.body
+
+            const client = await prisma.client.update({
+                where: {
+                    id: clientId
+                },
+                data: {
+                    name: newData.name,
+                    password: newData.password,
+                    corporateName: newData.corporateName,
+                    cnpj: newData.cnpj,
+                    phone: newData.phone,
+                    email: newData.email,
+                    address: {
+                        update:{
+                            zipCode: newData.zipCode,
+                            street: newData.street,
+                            number: Number(newData.number)
+                        }
+                    }
+                },
+                include: {
+                    address: true
+                }
+            })
+        } catch (error) {
+            console.log("erro", error)
+            res.sendStatus(500)
+        }
     }
 }
 
