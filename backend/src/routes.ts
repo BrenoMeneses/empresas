@@ -8,7 +8,7 @@ router.get("/client", clienteModel.getAll)
 router.get("/client/:clientId", clienteModel.getById)
 router.post("/client", clienteModel.create)
 router.post("/client/address", clienteModel.createwithAddress)
-router.get("/client/address", clienteModel.updateWithAddress)
+router.post("/client/address/:clientId", clienteModel.updateWithAddress)
 
 router.get("/address", addressModel.getAll)
 router.get("/address/:addressId", addressModel.getById)

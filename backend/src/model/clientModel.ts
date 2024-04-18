@@ -103,7 +103,7 @@ class ClientModel {
 
     public async updateWithAddress(req: Request, res: Response) {
         try {
-            const clientId = req.params.id
+            const clientId = req.params.clientId
             const newData = req.body
 
             const client = await prisma.client.update({
@@ -112,7 +112,6 @@ class ClientModel {
                 },
                 data: {
                     name: newData.name,
-                    password: newData.password,
                     corporateName: newData.corporateName,
                     cnpj: newData.cnpj,
                     phone: newData.phone,
@@ -129,6 +128,7 @@ class ClientModel {
                     address: true
                 }
             })
+            res.status(200).json(client)
         } catch (error) {
             console.log("erro", error)
             res.sendStatus(500)

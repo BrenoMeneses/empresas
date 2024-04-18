@@ -11,42 +11,42 @@ import { useEffect, useState } from "react"
 
 const Clients = [
     {
-      id: "1",
-      name: "Fulano da Silva",
-      password: "hashedPassword123",
-      corporateName: "Empresa Fictícia Ltda",
-      cnpj: "12.345.678/0001-90",
-      phone: "(11) 98765-4321",
-      email: "fulano@empresafాficticia.com.br",
-      createdAt: "2024-04-15T10:00:00.000Z",
-      updatedAt: "2024-04-15T10:00:00.000Z",
-      address: {
-        id: "address-1",
-        street: "Rua das Flores",
-        number: 123,
-        zipCode: "00000-000",
+        id: "1",
+        name: "Fulano da Silva",
+        password: "hashedPassword123",
+        corporateName: "Empresa Fictícia Ltda",
+        cnpj: "12.345.678/0001-90",
+        phone: "(11) 98765-4321",
+        email: "fulano@empresafాficticia.com.br",
         createdAt: "2024-04-15T10:00:00.000Z",
         updatedAt: "2024-04-15T10:00:00.000Z",
-      },
+        address: {
+            id: "address-1",
+            street: "Rua das Flores",
+            number: 123,
+            zipCode: "00000-000",
+            createdAt: "2024-04-15T10:00:00.000Z",
+            updatedAt: "2024-04-15T10:00:00.000Z",
+        },
     },
     {
-      id: "2",
-      name: "Beltrana de Souza",
-      password: "hashedPassword456",
-      corporateName: "Comércio Legal",
-      cnpj: "87.654.321/0001-11",
-      phone: "(21) 5555-5555",
-      email: "beltrana@comerciolegal.com",
-      createdAt: "2024-04-14T15:30:00.000Z",
-      updatedAt: "2024-04-14T15:30:00.000Z",
-      address: {
-        id: "address-2",
-        street: "Avenida Paulista",
-        number: 500,
-        zipCode: "11111-111",
+        id: "2",
+        name: "Beltrana de Souza",
+        password: "hashedPassword456",
+        corporateName: "Comércio Legal",
+        cnpj: "87.654.321/0001-11",
+        phone: "(21) 5555-5555",
+        email: "beltrana@comerciolegal.com",
         createdAt: "2024-04-14T15:30:00.000Z",
         updatedAt: "2024-04-14T15:30:00.000Z",
-      }
+        address: {
+            id: "address-2",
+            street: "Avenida Paulista",
+            number: 500,
+            zipCode: "11111-111",
+            createdAt: "2024-04-14T15:30:00.000Z",
+            updatedAt: "2024-04-14T15:30:00.000Z",
+        }
     }
 ]
 
@@ -85,7 +85,13 @@ export const ClientList = () => {
             })
     }, [])
 
-
+    function OnClickEdit(password: string, id: string) {
+        const pass = prompt("digite senha")
+        if (pass !== password) {
+            return alert("voce errou a senha")
+        }
+        window.location.href = "/edicao/" + id
+    }
 
     return (
         <TableContainer>
@@ -107,7 +113,7 @@ export const ClientList = () => {
                         {clients.map(client => (
                             <TableRow key={client.id}>
                                 <TableCell sx={{ textAlign: "end" }}>
-                                    <Button variant="contained" color="info" href={"/edicao/"+client.id}> editar <EditIcon/></Button>
+                                    <Button variant="contained" color="info" onClick={() => OnClickEdit(client.password, client.id)}> editar <EditIcon /></Button>
                                 </TableCell>
                                 <TableCell key={client.name}>{client.name}</TableCell>
                                 <TableCell key={client.corporateName}>{client.corporateName}</TableCell>
@@ -116,7 +122,7 @@ export const ClientList = () => {
                                 <TableCell key={client.address.zipCode}>{client.address.zipCode}</TableCell>
                                 <TableCell key={client.address.street}>{client.address.street} {client.address.number}</TableCell>
                                 <TableCell sx={{ textAlign: "start" }}>
-                                    <Button variant="contained" color="error">excluir <DeleteIcon/></Button>
+                                    <Button variant="contained" color="error">excluir <DeleteIcon /></Button>
                                 </TableCell>
                             </TableRow>
                         ))}
