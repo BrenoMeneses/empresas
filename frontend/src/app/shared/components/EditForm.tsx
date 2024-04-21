@@ -59,17 +59,17 @@ export const EditForm = () => {
             .then((data) => {
                 setValue(data)
             }).catch((error) => { console.log(error) })
-    }, [])
+    }, [id])
 
     function OnSubmit(data: editFields) {
         console.log(data)
         fetch("http://localhost:8080/client/address/" + id, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
-        }).then(() => { document.location.href = "/lista" })
+        }).then(() => { window.location.href = "/lista" })
         .catch((error) => { console.log(error) })
     }
 
@@ -161,7 +161,7 @@ export const EditForm = () => {
                         </Button>
                         <Box sx={{ flex: '1 1 auto' }} />
                         <Button type="submit" color="primary" variant="outlined">
-                            Confirar
+                            Confirmar
                         </Button>
                     </Box>
                 </Box>)

@@ -77,7 +77,6 @@ export const ClientList = () => {
     useEffect(() => {
         fetch("http://localhost:8080/client").then((response) => { return response.json() })
             .then((data) => {
-
                 setClients(data)
                 setErro(false)
             }).catch((error) => {
@@ -91,6 +90,15 @@ export const ClientList = () => {
             return alert("voce errou a senha")
         }
         window.location.href = "/edicao/" + id
+    }
+
+    function OnClickDelete(password: string, id: string) {
+        const pass = prompt("digite senha")
+        if (pass !== password) {
+            return alert("voce errou a senha")
+        }
+        fetch("http://localhost:8080/client/address/"+id, {method: "DELETE"})
+        .then(()=>{window.location.reload()})
     }
 
     return (
@@ -122,7 +130,7 @@ export const ClientList = () => {
                                 <TableCell key={client.address.zipCode}>{client.address.zipCode}</TableCell>
                                 <TableCell key={client.address.street}>{client.address.street} {client.address.number}</TableCell>
                                 <TableCell sx={{ textAlign: "start" }}>
-                                    <Button variant="contained" color="error">excluir <DeleteIcon /></Button>
+                                    <Button variant="contained" color="error" onClick={() => OnClickDelete(client.password, client.id)}>excluir <DeleteIcon /></Button>
                                 </TableCell>
                             </TableRow>
                         ))}

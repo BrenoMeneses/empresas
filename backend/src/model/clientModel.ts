@@ -20,6 +20,9 @@ class ClientModel {
             const clients: client[] = await prisma.client.findMany({
                 include: {
                     address: true
+                },
+                orderBy: {
+                    createdAt: "desc"
                 }
             })
             res.status(200).json(clients)
@@ -106,6 +109,8 @@ class ClientModel {
             const clientId = req.params.clientId
             const newData = req.body
 
+            console.log(newData, clientId)
+
             const client = await prisma.client.update({
                 where: {
                     id: clientId
@@ -117,7 +122,7 @@ class ClientModel {
                     phone: newData.phone,
                     email: newData.email,
                     address: {
-                        update:{
+                        update: {
                             zipCode: newData.zipCode,
                             street: newData.street,
                             number: Number(newData.number)
@@ -129,6 +134,24 @@ class ClientModel {
                 }
             })
             res.status(200).json(client)
+        } catch (error) {
+            console.log("erro", error)
+            res.sendStatus(500)
+        }
+    }
+
+    public async delete(req: Request, res: Response) {
+        try {
+            const {clientId} = req.params
+            const client = await prisma.client.delete({
+                where: {
+                    id: clientId
+                },
+                include: {
+                    address: true
+                }
+            })
+            res.status(200)
         } catch (error) {
             console.log("erro", error)
             res.sendStatus(500)
